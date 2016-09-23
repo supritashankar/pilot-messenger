@@ -1,6 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the chatroom index.")
+    template = loader.get_template('chatroom/index.html')
+    context = {
+        'latest_message': True,
+    }
+    return HttpResponse(template.render(context, request))
