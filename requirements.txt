@@ -1,3 +1,4 @@
 Django==1.10.1
 South==1.0.2
 requests==2.11.1
+pusher==1.5
