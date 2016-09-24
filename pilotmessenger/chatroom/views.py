@@ -21,7 +21,7 @@ def index(request):
             message_text = form.cleaned_data['message_text']
             channel = form.cleaned_data['channel']
             pusher_client.trigger(channel, 'my_event', {'message': message_text})
-            return render(request, 'chatroom/index.html')
+            return HttpResponse(status=200)
     else:
         form = MessageForm()
 

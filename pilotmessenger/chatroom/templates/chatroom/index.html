@@ -5,31 +5,34 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <title>Pilot Messenger</title>
   <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 
 <body>
   <h1>Send Message</h1>
+  <div id="messages">Show the messages</div>
     {% if form %}
-      <form action="http://127.0.0.1:8000/chat/" method="POST">
+      <form onsubmit="handleFormSubmit()">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
       </form>
-    {% else %}
-      Show the messages
     {% endif %}
     <script>
+      Pusher.logToConsole = true;
 
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
-      encrypted: true
-    });
-
-    var channel = pusher.subscribe('test_channel');
-    channel.bind('my_event', function(data) {
-      alert(data.message);
-    });
+      var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
+        encrypted: true
+      });
+      var channel = pusher.subscribe('test_channel');
+      channel.bind('my_event', function(data) {
+        $("#messages").append(data.message);
+      });
+  </script>
+  <script>
+    function handleFormSubmit(){
+      //Handle form submit inside this
+    }
   </script>
 </body>
 </html>
