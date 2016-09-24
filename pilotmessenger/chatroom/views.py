@@ -16,7 +16,9 @@ def index(request):
         #   secret='6dd89d34ce25d9ee23f4',
         #   ssl=True
         # )
+
         if form.is_valid():
+            print form.cleaned_data['message_text']
             return HttpResponseRedirect('/thanks/')
     else:
         form = MessageForm()
