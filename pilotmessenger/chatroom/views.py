@@ -33,13 +33,8 @@ class PostMessage(View):
     def post(self, request):
         message = request.POST['message_text']
         channel = request.POST['channel_name']
-        pusher_client = pusher.Pusher(
-            app_id='251400',
-            key='a4cc9d7318ae0879ac0b',
-            secret='6dd89d34ce25d9ee23f4',
-            ssl=True
-        )
-        pusher_client.trigger(channel, 'my_event', {'message': message})
+        p = singleton(PusherClient)
+        p.pusher_client.trigger(channel, 'my_event', {'message': message})
         return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
 
 class UpdateMessage(View):
@@ -49,3 +44,19 @@ class UpdateMessage(View):
         messages.append({u'message_text':message})
         self.request.session['messages'] = messages
         return HttpResponse('success')
+
+class PusherClient(object):
+    _instance = None
+    def __init__(self):
+        self.pusher_client = pusher.Pusher(
+            app_id='251400',
+            key='a4cc9d7318ae0879ac0b',
+            secret='6dd89d34ce25d9ee23f4',
+            ssl=True
+        )
+
+def singleton(classname):
+
+    if not classname._instance:
+        classname._instance = classname()
+    return classname._instance
