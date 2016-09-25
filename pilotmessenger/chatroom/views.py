@@ -43,10 +43,13 @@ class PostMessage(View):
 class UpdateMessage(View):
     def post(self, request):
         message = request.POST['message_text']
-        messages = self.request.session['messages']
-        messages.append({u'message_text':message})
-        self.request.session['messages'] = messages
-        return HttpResponse(status=200)
+        try:
+            messages = self.request.session['messages']
+            messages.append({u'message_text':message})
+            self.request.session['messages'] = messages
+            return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=500)
 
 class PusherClient(object):
     _instance = None
