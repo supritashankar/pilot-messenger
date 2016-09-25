@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
-from . import views
+from views import HomeView, PostMessage
 
 urlpatterns = [
-    url(r'^$', views.home, name='index'),
-    url(r'^postmessage/$', views.postmessage, name='postmessage'),
+    url(r'^$', HomeView.as_view(), name='index'),
+    url(r'^postmessage/$', PostMessage.as_view(), name='postmessage'),
 ]
