@@ -48,6 +48,13 @@ $(document).ajaxSend(function(event, xhr, settings) {
     channel.bind('my_event', function(data) {
       //alert(data.message);
       $('#messages').append(data.message);
+      $.ajax({
+        type: "POST",
+        url: "/chat/updatemessage/",
+        data:	{'message_text':data.message},
+      }).done(function(data) {
+        console.log('update data was success');
+      });
     });
 })();
 

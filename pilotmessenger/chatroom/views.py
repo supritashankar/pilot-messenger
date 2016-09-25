@@ -12,6 +12,17 @@ class HomeView(TemplateView):
     template_name = "chatroom/home.html"
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+
+        ## Update the intial view with the previous messages ##
+        try:
+            messages = self.request.session['messages']
+        except:
+            self.request.session['messages'] = []
+            messages = []
+        self.request.session['messages'] = messages
+
+        ## Send the form and initial messages in the context ##
+        context['messages'] = self.request.session['messages']
         context['form'] = MessageForm()
         return context
 
@@ -31,3 +42,11 @@ class PostMessage(View):
         )
         pusher_client.trigger(channel, 'my_event', {'message': message})
         return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
+
+class UpdateMessage(View):
+    def post(self, request):
+        message = request.POST['message_text']
+        messages = self.request.session['messages']
+        messages.append({u'message_text':message})
+        self.request.session['messages'] = messages
+        return HttpResponse('success')
