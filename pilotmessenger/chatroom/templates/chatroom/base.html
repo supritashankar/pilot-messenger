@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pilot messenger</title>
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	{% block extracss %}{% endblock %}
+</head>
+
+<body>
+{% block navbar %}
+<div class="bs-example">
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#" id="title">Pilot Messenger</a>
+            </div>
+
+	{% block extranav %}
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background:rgba(245,245,245,0.8)">
+            </div><!-- /.navbar-collapse -->
+	{% endblock %}
+          </div><!-- /.container-fluid -->
+        </nav>
+      </div>
+{% endblock %}
+{% block asidecontainer %}
+{% endblock %}
+
+{% block maincontainer %}{% endblock %}
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+{% block extrajs %}
+{% endblock %}
+</html>
