@@ -1,38 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <title>Pilot Messenger</title>
-  <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-</head>
-
-<body>
-  <h1>Send Message</h1>
-  <div id="messages">Show the messages</div>
-    {% if form %}
-      <form onsubmit="handleFormSubmit()">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
-      </form>
-    {% endif %}
-    <script>
-      Pusher.logToConsole = true;
-
-      var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
-        encrypted: true
-      });
-      var channel = pusher.subscribe('test_channel');
-      channel.bind('my_event', function(data) {
-        $("#messages").append(data.message);
-      });
-  </script>
-  <script>
-    function handleFormSubmit(){
-      //Handle form submit inside this
-    }
-  </script>
-</body>
-</html>
+{% extends 'chatroom/base.html' %}
+{% block extracss %}{% endblock %}
+{% block asidecontainer %}
+  <div class="container container-style">
+    <title>Stream</title>
+    <div class="row">
+      <div class="col-md-4 row-style">
+        <div class="col-md-11">
+          <form enctype="multipart/form-data" role="form" action="{% url 'index' %}" method="POST">
+              {% for field in form.visible_fields %}
+              <div class="form-group">
+                {{field.label_tag}}
+                {{field}}
+              </div>
+              {% endfor %}
+              <div class="form-group">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-default">Post</button>
+                </div>
+              </div>
+              {%csrf_token%}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block maincontainer %}
+  <div class="col-md-8 stream-style" id="stream">
+  {% include "chatroom/messages.html" %}
+  </div>
+{% endblock %}
+{% block extrajs %}
+	<script src="/static/js/script.js"></script>
+{% endblock %}
