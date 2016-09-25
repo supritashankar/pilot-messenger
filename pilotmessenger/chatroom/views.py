@@ -23,5 +23,11 @@ class PostMessage(View):
     def post(self, request):
         message = request.POST['message_text']
         channel = request.POST['channel_name']
-        print message, channel
+        pusher_client = pusher.Pusher(
+            app_id='251400',
+            key='a4cc9d7318ae0879ac0b',
+            secret='6dd89d34ce25d9ee23f4',
+            ssl=True
+        )
+        pusher_client.trigger(channel, 'my_event', {'message': message})
         return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
