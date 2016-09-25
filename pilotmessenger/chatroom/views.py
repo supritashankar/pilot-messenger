@@ -27,8 +27,6 @@ class HomeView(TemplateView):
 
 
 class PostMessage(View):
-    def get(self, request):
-        return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
 
     def post(self, request):
         message = request.POST['message_text']
@@ -41,6 +39,10 @@ class PostMessage(View):
             return HttpResponse(status=500)
 
 class UpdateMessage(View):
+    """
+        Each time a message is triggered we store that in the session.
+        So that even if the person refreshes the page we do not lose the previous ones.
+    """
     def post(self, request):
         message = request.POST['message_text']
         try:
@@ -52,7 +54,9 @@ class UpdateMessage(View):
             return HttpResponse(status=500)
 
 class PusherClient(object):
+
     _instance = None
+
     def __init__(self):
         self.pusher_client = pusher.Pusher(
             app_id='251400',
@@ -62,7 +66,9 @@ class PusherClient(object):
         )
 
 def singleton(classname):
-
+    """
+        This function is to assure only one instance of PusherClient exists at all times.
+    """
     if not classname._instance:
         classname._instance = classname()
     return classname._instance
