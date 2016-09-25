@@ -35,7 +35,8 @@ class PostMessage(View):
         channel = request.POST['channel_name']
         p = singleton(PusherClient)
         p.pusher_client.trigger(channel, 'my_event', {'message': message})
-        return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
+        form = MessageForm()
+        return HttpResponse(status=200)
 
 class UpdateMessage(View):
     def post(self, request):
@@ -43,7 +44,7 @@ class UpdateMessage(View):
         messages = self.request.session['messages']
         messages.append({u'message_text':message})
         self.request.session['messages'] = messages
-        return HttpResponse('success')
+        return HttpResponse(status=200)
 
 class PusherClient(object):
     _instance = None

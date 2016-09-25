@@ -68,6 +68,7 @@ function postchat(){
     data:	{'message_text':data[0][0].value, 'channel_name':data[0][1].value},
   }).done(function(data) {
     console.log('POST was success');
+    document.getElementById("newmessage-form").reset();
   });
   return false;
 }
