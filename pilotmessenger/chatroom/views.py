@@ -1,10 +1,9 @@
 import pusher
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from forms import MessageForm
-from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.views import View
 
