@@ -21,5 +21,7 @@ class PostMessage(View):
         return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})
 
     def post(self, request):
-        print 'inside POST'
+        message = request.POST['message_text']
+        channel = request.POST['channel_name']
+        print message, channel
         return render(request, 'chatroom/post-messages.html', {'form': MessageForm()})

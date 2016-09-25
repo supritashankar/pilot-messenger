@@ -58,10 +58,9 @@ function postchat(){
   $.ajax({
     type: "POST",
     url: "/chat/postmessage/",
-    data:	data,
+    data:	{'message_text':data[0][0].value, 'channel_name':data[0][1].value},
   }).done(function(data) {
-    console.log(data);
-    console.log('success');
+    console.log('POST was success');
   });
   return false;
 }
