@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-4 row-style">
         <div class="col-md-11">
-          <form enctype="multipart/form-data" role="form" action="{% url 'index' %}" method="POST">
+          <form id='newmessage-form' role="form" action="{% url 'index' %}" method="POST">
               {% for field in form.visible_fields %}
               <div class="form-group">
                 {{field.label_tag}}

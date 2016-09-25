@@ -1,6 +1,6 @@
 import pusher
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import loader
 from forms import MessageForm
@@ -21,7 +21,7 @@ def index(request):
             message_text = form.cleaned_data['message_text']
             channel = form.cleaned_data['channel']
             pusher_client.trigger(channel, 'my_event', {'message': message_text})
-            return HttpResponse(status=200)
+            return JsonResponse({'foo':'bar'})
     else:
         form = MessageForm()
 

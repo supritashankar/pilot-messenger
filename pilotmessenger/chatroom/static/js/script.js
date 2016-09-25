@@ -50,3 +50,16 @@ $(document).ajaxSend(function(event, xhr, settings) {
       $('#messages').append(data.message);
     });
 })();
+
+
+function postchat(){
+  var data = $('#newmessage-form')
+  $.ajax({
+    type: "POST",
+    url: "/chatroom/postmessage/",
+    data:	data,
+  }).done(function(data) {
+    console.log(data);
+    console.log('success');
+  });
+}
