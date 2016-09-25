@@ -53,13 +53,15 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 
 function postchat(){
-  var data = $('#newmessage-form')
+  var data = $('#newmessage-form');
+  console.log(data);
   $.ajax({
     type: "POST",
-    url: "/chatroom/postmessage/",
+    url: "/chat/postmessage/",
     data:	data,
   }).done(function(data) {
     console.log(data);
     console.log('success');
   });
+  return false;
 }
