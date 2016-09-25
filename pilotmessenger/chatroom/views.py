@@ -33,10 +33,12 @@ class PostMessage(View):
     def post(self, request):
         message = request.POST['message_text']
         channel = request.POST['channel_name']
-        p = singleton(PusherClient)
-        p.pusher_client.trigger(channel, 'my_event', {'message': message})
-        form = MessageForm()
-        return HttpResponse(status=200)
+        try:
+            p = singleton(PusherClient)
+            p.pusher_client.trigger(channel, 'my_event', {'message': message})
+            return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=500)
 
 class UpdateMessage(View):
     def post(self, request):
