@@ -4,3 +4,4 @@ requests==2.11.1
 pusher==1.5
 gunicorn==19.6.0
 dj-database-url==0.4.1
+psycopg2==2.6.2
