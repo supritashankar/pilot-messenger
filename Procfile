@@ -1,1 +1,1 @@
-web: gunicorn pilotmessenger.pilotmessenger.wsgi --log-file -
+web: gunicorn pilotmessenger.wsgi --log-file -
