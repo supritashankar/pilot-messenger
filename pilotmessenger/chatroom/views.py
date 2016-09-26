@@ -60,10 +60,9 @@ class PusherClient(object):
 
     def __init__(self):
         self.pusher_client = pusher.Pusher(
-            app_id='251400',
-            key='a4cc9d7318ae0879ac0b',
-            secret='6dd89d34ce25d9ee23f4',
-            ssl=True
+            app_id='252378',
+            key='48eec20d8ef030076b17',
+            secret='d2e330e7a270983a4430'
         )
 
 def singleton(classname):
