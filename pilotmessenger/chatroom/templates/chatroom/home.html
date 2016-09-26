@@ -1,20 +1,11 @@
 {% extends 'chatroom/base.html' %}
-{% block extracss %}{% endblock %}
-{% block asidecontainer %}
-  <div class="container container-style">
-    <title>Stream</title>
-    <div class="row">
-      <div class="col-md-4 row-style">
-        <div class="col-md-11">
-          {% include "chatroom/post-messages.html" %}
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
+{% block extracss %}<link href="/static/css/styles.css" rel="stylesheet"/>{% endblock %}
 {% block maincontainer %}
-  <div class="col-md-8 stream-style" id="stream">
-  {% include "chatroom/messages.html" %}
+  <div class="col-md-6 post-messages">
+    {% include "chatroom/post-messages.html" %}
+  </div>
+  <div class="col-md-6 stream">
+    {% include "chatroom/messages.html" %}
   </div>
 {% endblock %}
 {% block extrajs %}
