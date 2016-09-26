@@ -33,7 +33,7 @@ class PostMessage(View):
         channel = request.POST['channel_name']
         try:
             p = singleton(PusherClient)
-            p.pusher_client.trigger(channel, 'my_event', {'message': message})
+            p.pusher_client.trigger(channel, 'my_event', {'message': message, 'user':str(request.user)})
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)
@@ -45,9 +45,10 @@ class UpdateMessage(View):
     """
     def post(self, request):
         message = request.POST['message_text']
+        user = request.POST['user']
         try:
             messages = self.request.session['messages']
-            messages.append({u'message_text':message})
+            messages.append({u'message_text':message, u'user':user})
             self.request.session['messages'] = messages
             return HttpResponse(status=200)
         except:

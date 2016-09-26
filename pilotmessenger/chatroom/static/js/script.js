@@ -47,16 +47,17 @@ $(document).ajaxSend(function(event, xhr, settings) {
     var channel = pusher.subscribe('test_channel');
     channel.bind('my_event', function(data) {
       //alert(data.message);
-      $('#messages').append(data.message);
+      var para = "<p>" + data.message + " by " + data.user + "</p>"
+      $(para).appendTo('#messages');
       $.ajax({
         type: "POST",
         url: "/chat/updatemessage/",
-        data:	{'message_text':data.message},
+        data:	{'message_text':data.message, 'user':data.user},
         success: function(data, textStatus, request){
           console.log('update message was successful');
         },
         error: function (request, textStatus, errorThrown) {
-          alert('Oops there was some errror which executing updatemessage!')
+          alert('Oops there was some errror while executing updatemessage!')
         }
       });
     });

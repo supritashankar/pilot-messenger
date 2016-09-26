@@ -1,5 +1,5 @@
 <div id="messages">
   {% for message in messages %}
-    {{message.message_text}}
+    <p>{{message.message_text}} by {{message.user}}</p>
   {% endfor %}
 </div>
