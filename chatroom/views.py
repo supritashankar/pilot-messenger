@@ -1,14 +1,16 @@
 import pusher
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
-from forms import MessageForm
+from forms import MessageForm, SubscribeForm
 from django.views.generic.base import TemplateView
 from django.views import View
 
 class HomeView(TemplateView):
+
     template_name = "chatroom/home.html"
+
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
 
@@ -16,13 +18,20 @@ class HomeView(TemplateView):
         try:
             messages = self.request.session['messages']
         except:
-            self.request.session['messages'] = []
             messages = []
+
+        try:
+            channels = self.request.session['channels']
+        except:
+            channels = ['test-channel']
+
+
         self.request.session['messages'] = messages
+        self.request.session['channels'] = channels
 
         ## Send the form and initial messages in the context ##
         context['messages'] = self.request.session['messages']
-        context['form'] = MessageForm()
+        context['form'] = MessageForm(initial={'channels': ','.join(channels)})
         return context
 
 
@@ -56,6 +65,25 @@ class UpdateMessage(View):
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)
+
+class Subscribe(View):
+    """
+        A subscribe view which lets the user decide which channels he wants
+        to subscribe to.
+    """
+
+    def get(self, request):
+        context = {'form': SubscribeForm()}
+        return render(request, 'chatroom/subscribe.html', context)
+
+    def post(self, request):
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            channels = form.cleaned_data['user_input'].split(',')
+            self.request.session['channels'] = channels
+            return redirect('index')
+        return render(request, 'chatroom/subscribe.html', {'form':SubscribeForm()})
+
 
 class PusherClient(object):
 
