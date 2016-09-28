@@ -31,9 +31,10 @@ class PostMessage(View):
     def post(self, request):
         message = request.POST['message_text']
         channel = request.POST['channel_name']
+        event = request.POST['event_name']
         try:
             p = singleton(PusherClient)
-            p.pusher_client.trigger(channel, 'my_event', {'message': message, 'user':str(request.user)})
+            p.pusher_client.trigger(channel, event, {'message': message, 'user':str(request.user)})
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)
