@@ -49,12 +49,12 @@ $(document).ajaxSend(function(event, xhr, settings) {
     var eventName = 'sup-hack';
     var callback = function(data) {
       // add comment into page
-      var para = "<p>" + data.message + " by " + data.user + "</p>"
+      var para = "<p>" + data.message + " by " + data.user + "on this ch" data.channel + "</p>"
       $(para).appendTo('#messages');
       $.ajax({
         type: "POST",
         url: "/chat/updatemessage/",
-        data:	{'message_text':data.message, 'user':data.user},
+        data:	{'message_text':data.message, 'user':data.user, 'channel': data.channel},
         success: function(data, textStatus, request){
           console.log('update message was successful');
         },
@@ -72,7 +72,8 @@ function postchat(){
   $.ajax({
     type: "POST",
     url: "/chat/postmessage/",
-    data:	{'message_text':data[0][0].value, 'channel_name':data[0][1].value, 'event_name': data[0][2].value},
+    data:	{ 'message_text':data[0][0].value, 'channel_name':data[0][1].value,
+            'event_name': data[0][2].value },
     success: function(data, textStatus, request){
       document.getElementById("newmessage-form").reset();
     },
