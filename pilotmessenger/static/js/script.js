@@ -45,8 +45,10 @@ $(document).ajaxSend(function(event, xhr, settings) {
     });
 
     var channel = pusher.subscribe('test_channel');
-    channel.bind('my_event', function(data) {
-      //alert(data.message);
+    var channel1 = pusher.subscribe('dev_channel');
+    var eventName = 'sup-hack';
+    var callback = function(data) {
+      // add comment into page
       var para = "<p>" + data.message + " by " + data.user + "</p>"
       $(para).appendTo('#messages');
       $.ajax({
@@ -60,7 +62,8 @@ $(document).ajaxSend(function(event, xhr, settings) {
           alert('Oops there was some errror while executing updatemessage!')
         }
       });
-    });
+    };
+    pusher.bind(eventName, callback);
 })();
 
 
