@@ -31,7 +31,7 @@ class HomeView(TemplateView):
 
         ## Send the form and initial messages in the context ##
         context['messages'] = self.request.session['messages']
-        context['form'] = MessageForm(initial={'channels': ','.join(channels)})
+        context['form'] = MessageForm(initial={'channel': ','.join(channels)})
         return context
 
 
@@ -39,12 +39,12 @@ class PostMessage(View):
 
     def post(self, request):
         message = request.POST['message_text']
-        channel = request.POST['channel_name']
+        channel = request.POST['channel_name'].split(',')
         event = request.POST['event_name']
         try:
             p = singleton(PusherClient)
             p.pusher_client.trigger(channel, event,
-                    {'message': message, 'user':str(request.user), 'channel':channel})
+                    {'message': message, 'user':str(request.user), 'channel':','.join(channel)})
             return HttpResponse(status=200)
         except:
             return HttpResponse(status=500)

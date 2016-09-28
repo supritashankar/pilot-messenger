@@ -5,10 +5,10 @@ from django import forms
 class MessageForm(forms.ModelForm):
      class Meta:
          model = Message
-         fields = ['message_text', 'channels', 'event', 'public_channel']
+         fields = ['message_text', 'channel', 'event', 'public_channel']
          widgets = {
             'message_text': forms.TextInput(attrs={'class': 'form-control'}),
-            'channels': forms.HiddenInput(),
+            'channel': forms.HiddenInput(),
             'event': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
