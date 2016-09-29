@@ -69,13 +69,11 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 function postchat(){
   var data = $('#newmessage-form');
-  console.log('here');
-  console.log(data);
   $.ajax({
     type: "POST",
     url: "/chat/postmessage/",
-    data:	{ 'message_text':data[0][0].value, 'channel_name':data[0][3].defaultValue,
-            'event_name': data[0][1].value },
+    data:	{ 'message_text':data[0][0].value, 'channel_name':data[0][1].value,
+            'event_name': data[0][2].value },
     success: function(data, textStatus, request){
       document.getElementById("newmessage-form").reset();
     },

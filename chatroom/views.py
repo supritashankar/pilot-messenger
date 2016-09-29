@@ -1,5 +1,5 @@
 import pusher
-
+import json
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
@@ -55,9 +55,9 @@ class UpdateMessage(View):
         So that even if the person refreshes the page we do not lose the previous ones.
     """
     def post(self, request):
-        message = request.POST['message_text']
-        user = request.POST['user']
-        channel = request.POST['channel']
+        message = request.POST.get('message_text', 'Error!')
+        user = request.POST.get('user', 'no user')
+        channel = request.POST.get('channel', 'no channel')
         try:
             messages = self.request.session['messages']
             messages.append({u'message_text':message, u'user':user, u'channel':channel})
@@ -79,7 +79,7 @@ class Subscribe(View):
     def post(self, request):
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            channels = form.cleaned_data['user_input'].split(',')
+            channels = form.cleaned_data['user_input']
             self.request.session['channels'] = channels
             return redirect('index')
         return render(request, 'chatroom/subscribe.html', {'form':SubscribeForm()})
