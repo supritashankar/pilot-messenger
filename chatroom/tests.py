@@ -19,6 +19,7 @@ class ChatroomTest(TestCase):
         self.client.login(username='supushank', password='123')
         response = self.client.get('/chat/')
         self.assertEqual(response.status_code, 200) #Returns 200 as the person is logged in
+        self.assertEqual(self.client.session['messages'], [])
 
 
     def test_postmessage_with_get(self):
