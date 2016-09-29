@@ -1,5 +1,7 @@
 <div id="messages">
-  {% for message in messages %}
-    <p>{{message.message_text}} by {{message.user}} on this ch {{message.channel}}</p>
-  {% endfor %}
+  <ul class="list-unstyled">
+    {% for message in messages %}
+      <li><pre>{{message.message_text}} by <em>{{message.user}}</em> on - <mark> {{message.channel}}</mark></pre></li>
+    {% endfor %}
+  </ul>
 </div>

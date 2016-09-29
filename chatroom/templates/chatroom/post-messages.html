@@ -1,4 +1,5 @@
 <form id='newmessage-form' role="form" onsubmit="return postchat();" method="POST">
+  <h3>Post message to channels</h3>
     {% for field in form.visible_fields %}
       <div class="form-group">
         {{field.label_tag}}
