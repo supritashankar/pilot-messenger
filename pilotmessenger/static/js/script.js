@@ -44,7 +44,7 @@ $(document).ajaxSend(function(event, xhr, settings) {
     var subscribe_channels = data.split(',');
     Pusher.logToConsole = true;
 
-    var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
+    var pusher = new Pusher('48eec20d8ef030076b17', {
       authEndpoint: '/pusher/auth',
       auth: {
         headers: {
