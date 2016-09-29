@@ -38,18 +38,23 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 (function(){
     console.log('Script is loaded');
+    var data = $('#newmessage-form')[0][4].value;
+    var subscribe_channels = data.split(',');
+    console.log(subscribe_channels);
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
       encrypted: true
     });
 
-    var channel = pusher.subscribe('test_channel');
-    var channel1 = pusher.subscribe('dev_channel');
+    subscribe_channels.forEach(function(channel){
+      pusher.subscribe(channel);
+    });
     var eventName = 'sup-hack';
+
     var callback = function(data) {
       // add comment into page
-      var para = "<p>" + data.message + " by " + data.user + "on this ch" + data.channel + "</p>"
+      var para = "<p>" + data.message + " by " + data.user + "on this ch " + data.channel + "</p>"
       $(para).appendTo('#messages');
       $.ajax({
         type: "POST",

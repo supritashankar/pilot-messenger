@@ -31,7 +31,7 @@ class HomeView(TemplateView):
 
         ## Send the form and initial messages in the context ##
         context['messages'] = self.request.session['messages']
-        context['form'] = MessageForm(initial={'channel': ','.join(channels)})
+        context['form'] = MessageForm(initial={'subscribe_channels': channels})
         return context
 
 
