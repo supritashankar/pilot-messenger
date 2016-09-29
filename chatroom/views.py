@@ -16,14 +16,14 @@ class HomeView(TemplateView):
 
         ## Update the intial view with the previous messages ##
         messages = self.request.session.get('messages', [])
-        channels = self.request.session.get('channels', ['test-channel'])
+        channels = self.request.session.get('channels', ['test_channel'])
 
         self.request.session['messages'] = messages
         self.request.session['channels'] = channels
 
         ## Send the form and initial messages in the context ##
         context['messages'] = self.request.session['messages']
-        context['form'] = MessageForm(initial={'subscribe_channels': channels})
+        context['form'] = MessageForm(initial={'subscribe_channels': ','.join(channels)})
         return context
 
 
