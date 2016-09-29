@@ -66,6 +66,16 @@ class UpdateMessage(View):
         except:
             return HttpResponse(status=500)
 
+class PusherAuth(View):
+    """ Auth view to subscribe to private channels within Pusher
+    """
+    def post(self, request):
+        auth = pusher.authenticate(
+            channel=request.form['channel_name'],
+            socket_id=request.form['socket_id']
+        )
+        return json.dumps(auth)
+
 class Subscribe(View):
     """
         A subscribe view which lets the user decide which channels he wants

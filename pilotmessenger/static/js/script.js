@@ -38,22 +38,36 @@ $(document).ajaxSend(function(event, xhr, settings) {
 
 (function(){
     console.log('Script is loaded');
+    console.log($('#newmessage-form'));
     var data = $('#newmessage-form')[0][4].value;
+    var csrf = $('#newmessage-form')[0][6].value;
     var subscribe_channels = data.split(',');
-    console.log(subscribe_channels);
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('a4cc9d7318ae0879ac0b', {
+      authEndpoint: '/pusher/auth',
+      auth: {
+        headers: {
+          'X-CSRF-Token': csrf
+        }
+      },
       encrypted: true
     });
 
     subscribe_channels.forEach(function(channel){
       pusher.subscribe(channel);
     });
+    //pusher.subscribe('private-test_channel');
+
+
     var eventName = 'sup-hack';
 
     var callback = function(data) {
       // add comment into page
+      var socket = 0;
+      if (pusher && pusher.connection){
+        socket = pusher.connection.socket_id;
+      }
       var para = "<p>" + data.message + " by " + data.user + "on this ch " + data.channel + "</p>"
       $(para).appendTo('#messages');
       $.ajax({
