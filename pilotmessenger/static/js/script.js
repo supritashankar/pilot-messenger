@@ -68,7 +68,7 @@ $(document).ajaxSend(function(event, xhr, settings) {
       if (pusher && pusher.connection){
         socket = pusher.connection.socket_id;
       }
-      var para = "<p>" + data.message + " by " + data.user + "on this ch " + data.channel + "</p>"
+      var para = "<pre>" + data.message + " by  <em>" + data.user + "</em> on - <mark>" + data.channel + "</mark></pre>"
       $(para).appendTo('#messages');
       $.ajax({
         type: "POST",
