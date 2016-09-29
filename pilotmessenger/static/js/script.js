@@ -78,7 +78,7 @@ $(document).ajaxSend(function(event, xhr, settings) {
           console.log('update message was successful');
         },
         error: function (request, textStatus, errorThrown) {
-          alert('Oops there was some errror while executing updatemessage!')
+          console.log('Oops there was some errror while executing updatemessage!')
         }
       });
     };
@@ -97,7 +97,7 @@ function postchat(){
       document.getElementById("newmessage-form").reset();
     },
     error: function (request, textStatus, errorThrown) {
-      alert('Oops there was some errror while submitting the form!')
+      console.log('Oops there was some errror while submitting the form!')
     }
   });
   return false;
