@@ -18,15 +18,20 @@ class ChatroomTest(TestCase):
     def test_chat_with_new_user(self):
         self.client.login(username='supushank', password='123')
         response = self.client.get('/chat/')
-        session = self.client.session
         self.assertEqual(response.status_code, 200) #Returns 200 as the person is logged in
-        self.assertEqual(session['messages'], [])
 
 
     def test_postmessage_with_get(self):
         self.client.login(username='supushank', password='123')
         response = self.client.get('/chat/postmessage/')
         self.assertEqual(response.status_code, 405) #Returns 405 as it is not allowed in this classview
+
+    def test_postmessage_with_post(self):
+        #TODO: Stub pusher. Do not make actual calls.
+        self.client.login(username='supushank', password='123')
+        response = self.client.post('/chat/postmessage/',
+                            {'message_text': 'hello world', 'channel_name': 'test_channel', 'event_name':'sup-hack'}, format='json')
+        self.assertEqual(response.status_code, 200) #Returns 200 as it posts successfully
 
     def test_postmessage_with_post(self):
         #TODO: Stub pusher. Do not make actual calls.

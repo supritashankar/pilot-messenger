@@ -15,8 +15,16 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
 
         ## Update the intial view with the previous messages ##
-        messages = self.request.session.get('messages', [])
-        channels = self.request.session.get('channels', ['test-channel'])
+        try:
+            messages = self.request.session['messages']
+        except:
+            messages = []
+
+        try:
+            channels = self.request.session['channels']
+        except:
+            channels = ['test-channel']
+
 
         self.request.session['messages'] = messages
         self.request.session['channels'] = channels
@@ -50,10 +58,13 @@ class UpdateMessage(View):
         message = request.POST.get('message_text', 'Error!')
         user = request.POST.get('user', 'no user')
         channel = request.POST.get('channel', 'no channel')
-        messages = self.request.session['messages']
-        messages.append({u'message_text':message, u'user':user, u'channel':channel})
-        self.request.session['messages'] = messages
-        return HttpResponse(status=200)
+        try:
+            messages = self.request.session['messages']
+            messages.append({u'message_text':message, u'user':user, u'channel':channel})
+            self.request.session['messages'] = messages
+            return HttpResponse(status=200)
+        except:
+            return HttpResponse(status=500)
 
 class PusherAuth(View):
     """ Auth view to subscribe to private channels within Pusher
